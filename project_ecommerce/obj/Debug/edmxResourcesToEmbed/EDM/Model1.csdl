@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EcommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="lname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="card">
+    <Key>
+      <PropertyRef Name="card_id" />
+    </Key>
+    <Property Name="card_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="customer" Relationship="Self.FK_card_customer" FromRole="card" ToRole="customer" />
+    <NavigationProperty Name="product" Relationship="Self.FK_card_product" FromRole="card" ToRole="product" />
+  </EntityType>
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="state_id" Type="Int32" />
+    <NavigationProperty Name="state" Relationship="Self.FK_city_state" FromRole="city" ToRole="state" />
+    <NavigationProperty Name="customers" Relationship="Self.FK_customer_city" FromRole="city" ToRole="customer" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="lname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="Int64" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="state_id" Type="Int32" />
+    <Property Name="city_id" Type="Int32" />
+    <Property Name="profile_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cards" Relationship="Self.FK_card_customer" FromRole="customer" ToRole="card" />
+    <NavigationProperty Name="city" Relationship="Self.FK_customer_city" FromRole="customer" ToRole="city" />
+    <NavigationProperty Name="state" Relationship="Self.FK_customer_state" FromRole="customer" ToRole="state" />
+  </EntityType>
+  <EntityType Name="Eorder">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="order_data" Type="DateTime" Precision="3" />
+    <Property Name="order_status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="order_detail">
+    <Key>
+      <PropertyRef Name="order_detail_id" />
+    </Key>
+    <Property Name="order_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="product_quentity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="cost" Type="Int64" />
+    <Property Name="product_img1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="product_img2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="product_img3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="discount" Type="Int64" />
+    <NavigationProperty Name="cards" Relationship="Self.FK_card_product" FromRole="product" ToRole="card" />
+  </EntityType>
+  <EntityType Name="state">
+    <Key>
+      <PropertyRef Name="state_id" />
+    </Key>
+    <Property Name="state_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="state_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cities" Relationship="Self.FK_city_state" FromRole="state" ToRole="city" />
+    <NavigationProperty Name="customers" Relationship="Self.FK_customer_state" FromRole="state" ToRole="customer" />
+  </EntityType>
+  <Association Name="FK_card_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="card" Type="Self.card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="card">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_card_product">
+    <End Role="product" Type="Self.product" Multiplicity="0..1" />
+    <End Role="card" Type="Self.card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="card">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_city_state">
+    <End Role="state" Type="Self.state" Multiplicity="0..1" />
+    <End Role="city" Type="Self.city" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="state">
+        <PropertyRef Name="state_id" />
+      </Principal>
+      <Dependent Role="city">
+        <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_customer_city">
+    <End Role="city" Type="Self.city" Multiplicity="0..1" />
+    <End Role="customer" Type="Self.customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="customer">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_customer_state">
+    <End Role="state" Type="Self.state" Multiplicity="0..1" />
+    <End Role="customer" Type="Self.customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="state">
+        <PropertyRef Name="state_id" />
+      </Principal>
+      <Dependent Role="customer">
+        <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EcommerceEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admins" EntityType="Self.admin" />
+    <EntitySet Name="cards" EntityType="Self.card" />
+    <EntitySet Name="cities" EntityType="Self.city" />
+    <EntitySet Name="customers" EntityType="Self.customer" />
+    <EntitySet Name="Eorders" EntityType="Self.Eorder" />
+    <EntitySet Name="order_detail" EntityType="Self.order_detail" />
+    <EntitySet Name="products" EntityType="Self.product" />
+    <EntitySet Name="states" EntityType="Self.state" />
+    <AssociationSet Name="FK_card_customer" Association="Self.FK_card_customer">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="card" EntitySet="cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_card_product" Association="Self.FK_card_product">
+      <End Role="product" EntitySet="products" />
+      <End Role="card" EntitySet="cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_city_state" Association="Self.FK_city_state">
+      <End Role="state" EntitySet="states" />
+      <End Role="city" EntitySet="cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_customer_city" Association="Self.FK_customer_city">
+      <End Role="city" EntitySet="cities" />
+      <End Role="customer" EntitySet="customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_customer_state" Association="Self.FK_customer_state">
+      <End Role="state" EntitySet="states" />
+      <End Role="customer" EntitySet="customers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

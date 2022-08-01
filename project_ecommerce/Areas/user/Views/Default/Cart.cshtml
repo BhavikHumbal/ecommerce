@@ -1,0 +1,112 @@
+﻿@model IEnumerable<project_ecommerce.EDM.card>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Areas/user/Views/Shared/user_LayoutPage1.cshtml";
+    double? CartTotal = 0;
+
+}
+
+<script src="~/NumericTextBoxStyle/JavaScript.js"></script>
+<link href="~/NumericTextBoxStyle/StyleSheet1.css" rel="stylesheet" />
+<h2>Cart</h2>
+<div class="products">
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>
+                    Product Image
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th>
+                    Discount(%)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.quantity)
+                </th>
+                <th>
+                    Amount
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Docs/@item.product.product_img1" height="100" width="100" />
+                    </td>
+                    <td>
+                        @item.product.product_name
+                    </td>
+                    <td>
+                        @item.product.cost
+                    </td>
+                    <td>
+                        @item.product.discount
+                    </td>
+                    <td>
+                        <div class="quantity buttons_added">
+                            <input type="button" value="-" class="minus">
+                            <input type="number" id="txtqty@(item.card_id)" step="1" min="1" max="" name="quantity"
+                                   value="@item.quantity" class="input-text qty text"
+                                   onchange="updateCartQty(@item.card_id, document.getElementById('txtqty@(item.card_id)').value)">
+                            <input type="button" value="+" class="plus">
+                        </div>
+                    </td>
+                    <td>
+                        @{
+                            double? amount = 0;
+                            amount = (item.product.cost - (item.product.cost * item.product.discount / 100)) * item.quantity;
+                            CartTotal += amount;
+                        }
+                        @amount
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.card_id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <script>
+            function updateCartQty(cartid, qty) {
+                $.ajax({
+                    url: "/user/Default/UpdateCartQty",
+                    type: "POST",
+                    data: { id: cartid, qty: qty },
+                    dataType: "text",
+                    success: function (data) {
+                        alert(data);
+                        window.location.href = "/user/Default/Cart";
+                    }
+                });
+            }
+        </script>
+
+        <div class="col-md-3">
+            <table class="table">
+                <tr>
+                    <th>Cart Total</th>
+                    <td>₹ @CartTotal</td>
+                </tr>
+                <tr>
+                    <th>GST (@@18%)</th>
+                    <td>₹ @(CartTotal + (CartTotal*18/100))</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a href="/user/Default/Checkout" class="btn btn-warning col-md-12">Checkout</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

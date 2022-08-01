@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EcommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="nvarchar(max)" />
+          <Property Name="lname" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="card">
+          <Key>
+            <PropertyRef Name="card_id" />
+          </Key>
+          <Property Name="card_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="city_name" Type="nvarchar(max)" />
+          <Property Name="state_id" Type="int" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="nvarchar(max)" />
+          <Property Name="lname" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="mobile" Type="bigint" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="state_id" Type="int" />
+          <Property Name="city_id" Type="int" />
+          <Property Name="profile_img" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Eorder">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="order_data" Type="datetime" />
+          <Property Name="order_status" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="order_detail">
+          <Key>
+            <PropertyRef Name="order_detail_id" />
+          </Key>
+          <Property Name="order_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="product_quentity" Type="nvarchar(max)" />
+          <Property Name="cost" Type="bigint" />
+          <Property Name="product_img1" Type="nvarchar(max)" />
+          <Property Name="product_img2" Type="nvarchar(max)" />
+          <Property Name="product_img3" Type="nvarchar(max)" />
+          <Property Name="discount" Type="bigint" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="state_name" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_card_customer">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="card" Type="Self.card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="card">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_card_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="card" Type="Self.card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="card">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_city_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="city" Type="Self.city" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="city">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_city">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerceModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="card" EntityType="Self.card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eorder" EntityType="Self.Eorder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_detail" EntityType="Self.order_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_card_customer" Association="Self.FK_card_customer">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="card" EntitySet="card" />
+          </AssociationSet>
+          <AssociationSet Name="FK_card_product" Association="Self.FK_card_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="card" EntitySet="card" />
+          </AssociationSet>
+          <AssociationSet Name="FK_city_state" Association="Self.FK_city_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="city" EntitySet="city" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_city" Association="Self.FK_customer_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_state" Association="Self.FK_customer_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EcommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="card">
+          <Key>
+            <PropertyRef Name="card_id" />
+          </Key>
+          <Property Name="card_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_card_customer" FromRole="card" ToRole="customer" />
+          <NavigationProperty Name="product" Relationship="Self.FK_card_product" FromRole="card" ToRole="product" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="city_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="state_id" Type="Int32" />
+          <NavigationProperty Name="state" Relationship="Self.FK_city_state" FromRole="city" ToRole="state" />
+          <NavigationProperty Name="customers" Relationship="Self.FK_customer_city" FromRole="city" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="Int64" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="state_id" Type="Int32" />
+          <Property Name="city_id" Type="Int32" />
+          <Property Name="profile_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_card_customer" FromRole="customer" ToRole="card" />
+          <NavigationProperty Name="city" Relationship="Self.FK_customer_city" FromRole="customer" ToRole="city" />
+          <NavigationProperty Name="state" Relationship="Self.FK_customer_state" FromRole="customer" ToRole="state" />
+        </EntityType>
+        <EntityType Name="Eorder">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="order_data" Type="DateTime" Precision="3" />
+          <Property Name="order_status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="order_detail">
+          <Key>
+            <PropertyRef Name="order_detail_id" />
+          </Key>
+          <Property Name="order_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="product_quentity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cost" Type="Int64" />
+          <Property Name="product_img1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="product_img2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="product_img3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="discount" Type="Int64" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_card_product" FromRole="product" ToRole="card" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="state_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cities" Relationship="Self.FK_city_state" FromRole="state" ToRole="city" />
+          <NavigationProperty Name="customers" Relationship="Self.FK_customer_state" FromRole="state" ToRole="customer" />
+        </EntityType>
+        <Association Name="FK_card_customer">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="card" Type="Self.card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="card">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_card_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="card" Type="Self.card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="card">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_city_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="city" Type="Self.city" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="city">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_city">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerceEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="cards" EntityType="Self.card" />
+          <EntitySet Name="cities" EntityType="Self.city" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="Eorders" EntityType="Self.Eorder" />
+          <EntitySet Name="order_detail" EntityType="Self.order_detail" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="states" EntityType="Self.state" />
+          <AssociationSet Name="FK_card_customer" Association="Self.FK_card_customer">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="card" EntitySet="cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_card_product" Association="Self.FK_card_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="card" EntitySet="cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_city_state" Association="Self.FK_city_state">
+            <End Role="state" EntitySet="states" />
+            <End Role="city" EntitySet="cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_city" Association="Self.FK_customer_city">
+            <End Role="city" EntitySet="cities" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_state" Association="Self.FK_customer_state">
+            <End Role="state" EntitySet="states" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EcommerceModelStoreContainer" CdmEntityContainer="EcommerceEntities1">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="EcommerceModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cards">
+            <EntityTypeMapping TypeName="EcommerceModel.card">
+              <MappingFragment StoreEntitySet="card">
+                <ScalarProperty Name="card_id" ColumnName="card_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cities">
+            <EntityTypeMapping TypeName="EcommerceModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="city_name" ColumnName="city_name" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="EcommerceModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="profile_img" ColumnName="profile_img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eorders">
+            <EntityTypeMapping TypeName="EcommerceModel.Eorder">
+              <MappingFragment StoreEntitySet="Eorder">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="order_data" ColumnName="order_data" />
+                <ScalarProperty Name="order_status" ColumnName="order_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_detail">
+            <EntityTypeMapping TypeName="EcommerceModel.order_detail">
+              <MappingFragment StoreEntitySet="order_detail">
+                <ScalarProperty Name="order_detail_id" ColumnName="order_detail_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="EcommerceModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="product_quentity" ColumnName="product_quentity" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="product_img1" ColumnName="product_img1" />
+                <ScalarProperty Name="product_img2" ColumnName="product_img2" />
+                <ScalarProperty Name="product_img3" ColumnName="product_img3" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="EcommerceModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

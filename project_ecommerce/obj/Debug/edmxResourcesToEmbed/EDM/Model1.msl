@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EcommerceModelStoreContainer" CdmEntityContainer="EcommerceEntities1">
+    <EntitySetMapping Name="admins">
+      <EntityTypeMapping TypeName="EcommerceModel.admin">
+        <MappingFragment StoreEntitySet="admin">
+          <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+          <ScalarProperty Name="fname" ColumnName="fname" />
+          <ScalarProperty Name="lname" ColumnName="lname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cards">
+      <EntityTypeMapping TypeName="EcommerceModel.card">
+        <MappingFragment StoreEntitySet="card">
+          <ScalarProperty Name="card_id" ColumnName="card_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cities">
+      <EntityTypeMapping TypeName="EcommerceModel.city">
+        <MappingFragment StoreEntitySet="city">
+          <ScalarProperty Name="city_id" ColumnName="city_id" />
+          <ScalarProperty Name="city_name" ColumnName="city_name" />
+          <ScalarProperty Name="state_id" ColumnName="state_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customers">
+      <EntityTypeMapping TypeName="EcommerceModel.customer">
+        <MappingFragment StoreEntitySet="customer">
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="fname" ColumnName="fname" />
+          <ScalarProperty Name="lname" ColumnName="lname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="state_id" ColumnName="state_id" />
+          <ScalarProperty Name="city_id" ColumnName="city_id" />
+          <ScalarProperty Name="profile_img" ColumnName="profile_img" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Eorders">
+      <EntityTypeMapping TypeName="EcommerceModel.Eorder">
+        <MappingFragment StoreEntitySet="Eorder">
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="order_data" ColumnName="order_data" />
+          <ScalarProperty Name="order_status" ColumnName="order_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="order_detail">
+      <EntityTypeMapping TypeName="EcommerceModel.order_detail">
+        <MappingFragment StoreEntitySet="order_detail">
+          <ScalarProperty Name="order_detail_id" ColumnName="order_detail_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="EcommerceModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="product_quentity" ColumnName="product_quentity" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="product_img1" ColumnName="product_img1" />
+          <ScalarProperty Name="product_img2" ColumnName="product_img2" />
+          <ScalarProperty Name="product_img3" ColumnName="product_img3" />
+          <ScalarProperty Name="discount" ColumnName="discount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="states">
+      <EntityTypeMapping TypeName="EcommerceModel.state">
+        <MappingFragment StoreEntitySet="state">
+          <ScalarProperty Name="state_id" ColumnName="state_id" />
+          <ScalarProperty Name="state_name" ColumnName="state_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

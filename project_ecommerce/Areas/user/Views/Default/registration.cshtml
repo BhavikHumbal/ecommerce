@@ -1,0 +1,72 @@
+﻿@model project_ecommerce.EDM.customer
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Best Store a Ecommerce Online Shopping Category Flat Bootstrap Responsive Website Template | Register :: w3layouts</title>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Best Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <link href="~/Areas/user/web/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Areas/user/web/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <script src="~/Areas/user/web/js/jquery.min.js"></script>
+    <!-- //js -->
+    <!-- cart -->
+    <script src="~/Areas/user/web/js/simpleCart.min.js"></script>
+    <!-- cart -->
+    <link rel="stylesheet" type="text/css" href="~/Areas/user/web/css/jquery-ui.css">
+    <!-- for bootstrap working -->
+    <script type="text/javascript" src="~/Areas/user/web/js/bootstrap-3.1.1.min.js"></script>
+    <!-- //for bootstrap working -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- animation-effect -->
+    <link href="~/Areas/user/web/css/animate.min.css" rel="stylesheet">
+    <script src="~/Areas/user/web/js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <!-- //animation-effect -->
+</head>
+<body>
+    <div class="register">
+        <div class="container">
+            <h3 class="animated wow zoomIn" data-wow-delay=".5s">Register Here</h3>
+            <p class="est animated wow zoomIn" data-wow-delay=".5s">
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+            <div class="login-form-grids">
+                <h5 class="animated wow slideInUp" data-wow-delay=".5s">profile information</h5>
+                @using (Html.BeginForm())
+                {
+                    <input type="text" name="fname" placeholder="First Name..." required=" ">
+                    <input type="text" name="lname" placeholder="Last Name..." required=" ">
+                    <input type="email" name="email" placeholder="email add..." required=" ">
+                    <input type="password" name="password" placeholder="password..." required=" ">
+                    <input type="text" name="mobile" placeholder="mobile..." required=" ">
+                    <input type="text" name="address" placeholder="address..." required=" ">
+                    <input type="text" name="state_id" placeholder="state_id..." required=" ">
+                    <input type="text" name="city_id" placeholder="city_id..." required=" ">
+
+                    <input type="submit" value="Register">
+                }
+            </div>
+            <div class="register-home animated wow slideInUp" data-wow-delay=".5s">
+                <a href="/user/Default/Index">Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
